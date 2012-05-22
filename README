@@ -1,0 +1,71 @@
+=====================================================================
+= ICMI Seven-Segment Board                                          =
+=====================================================================
+* Author          : Hendrik Busch
+* Current version : 1.1
+* License         : Creative Commons Attribution-NonCommercial-
+                    ShareAlike 3.0 Germany License.
+
+The Seven-Segment Board offers up to 8 seven-segment digits with a
+control circuit made up of several cheap and easy to obtain
+components.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+WARNING: The current board still has a design flaw. The prototype
+was tested on breadboard with 2N7000 MOSFETs, whereas the final board
+features 2N7002 SMD MOSFETs. The difference is that the SMD version
+can only switch a current of up to 11.5 milliamps, which is not really
+enough for the LEDs and results in a very dim display, especially when
+current limiting resistors are used in addition. During prototyping,
+this error did not occur because the 2N7000 can switch up to 20 mA
+which is enough for a properly lit display. 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Seven-segment LED circuit
+-------------------------
+The board uses dual common anode seven-segment displays, meaning that
+each component feature two digits with seven segments each. Each digit
+has its own anode that is common to all segments in that digit (thus
+common anode) and each segment has its own cathode, resulting in two 
+anodes and 14 cathodes per component. Each segment cathode of a
+digit is connected to all the other cathodes for this segment on
+the other digits.
+The LED circuit therefore features 8 anodes (one for each digit) and
+7 cathodes (one for each segment).
+
+Switching circuit
+-----------------
+The switching circuit uses a minimum of I/O 5 pins (excluding power).
+
+Two are needed for a 74HC4017 decade counter that is responsible for
+sourcing power to the digits, one at a time. Using a software timer,
+the decade counter switches through each digit so fast, that the
+human eye cannot distinguish between the single digits being turned
+on and off but sees a steady display with all eight digits lit (this
+is called the POV (persistence-of-vision) effect. Exploiting this
+effect, the software and circuit only have to worry about displaying
+a single digit at a time and switching between digits.
+
+In order to control what each digit is actually displaying, a shift
+register (74HC595) is used to set the state of each segment. As the
+shift register is not made to sink current, it is connected to an
+ULN2803A darlington array. If one of the shift register pins is HIGH,
+the corresponding switch in the darlington array sinks the incoming
+LED current on that pin, effectively lighting the corresponding 
+segment.
+
+The software must ensure that the digit switching and the segment
+configuration are in sync, otherwise the display content may show
+as distorted of shifted.
+
+Version History
+---------------
+
+- v1.1
+  - The CLEAR pin of the shift register is now connected to VCC and 
+    not to GND as before. Pulling it to GND in v1.0 resulted in a
+	continous purge of any data loaded into the register and thus
+	rendering the display unusable.
+
+- v1.0
+  - Initial revision
