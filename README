@@ -11,14 +11,18 @@ control circuit made up of several cheap and easy to obtain
 components.
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-WARNING: The current board still has a design flaw. The prototype
-was tested on breadboard with 2N7000 MOSFETs, whereas the final board
-features 2N7002 SMD MOSFETs. The difference is that the SMD version
-can only switch a current of up to 11.5 milliamps, which is not really
-enough for the LEDs and results in a very dim display, especially when
-current limiting resistors are used in addition. During prototyping,
-this error did not occur because the 2N7000 can switch up to 20 mA
-which is enough for a properly lit display. 
+WARNING: The current board still has a design flaw. Since the ULN2803
+and the 2N7002 each incur a voltage drop when active, 5 volts is not
+really enough to light the display properly when driving high refresh 
+rates for the POV effect. The first counter measure given the current
+design is to insert lower current limiting resistors (say 10 ohms 
+instead of 150). The other measure would be to increase the voltage,
+but with the current design voltage can only be increased to 7 volts
+as this is the maximum voltage for the shift register and the decade
+counter. So an increase from 5 to 6 volts currently seems the most 
+reasonable.
+The next design iteration will feature seperated supply lines for the
+LED segments and the TTL logic, just to make sure.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Seven-segment LED circuit
