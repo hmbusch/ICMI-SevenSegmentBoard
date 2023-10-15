@@ -1,0 +1,28 @@
+{
+    "layout": {
+        "hspace": "2mm",
+        "vspace": "2mm",
+        "rows": "3"
+    },
+    "tabs": {
+        "type": "fixed",
+        "vwidth": "50mm"
+    },
+    "cuts": {
+        "type": "vcuts"
+    },
+    "framing": {
+        "type": "railstb"
+    },
+    "text": {
+        "type": "simple",
+        "voffset": "2.5mm",
+        "text": "JLCJLCJLCJLC"
+    },
+    "copperfill": {
+        "type": "solid"
+    },
+    "post": {
+        "millradius": "1mm"
+    }
+}
